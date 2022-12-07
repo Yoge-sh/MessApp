@@ -9,6 +9,7 @@ import 'package:mess/Auth/fireAuth.dart';
 import 'package:mess/Auth/validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'ResetScreen.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -268,6 +269,14 @@ class _LoginPageState extends State<LoginPage> {
                                                             },
                                                             child: Text(
                                                                 "Register"))
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        TextButton(onPressed: () => Navigator.of(context).push(
+                                                          MaterialPageRoute(builder: (context)=> ResetScreen())
+                                                        ), child: Text('Forgot Password'))
                                                       ],
                                                     )
                                                   ],
