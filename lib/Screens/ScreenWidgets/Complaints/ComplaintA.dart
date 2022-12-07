@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,16 +23,27 @@ class _ComplaintState extends State<ComplaintA> {
 
         return Dismissible(
           key: Key(doc.id),
-          onDismissed: (direction) {
+          onDismissed: (direction) async {
             if (direction == DismissDirection.endToStart) {
-              FirebaseFirestore.instance
-                  .collection("complaints")
-                  .doc(doc.id)
-                  .delete();
+              await FirebaseFirestore.instance
+                  .runTransaction((transaction) async {
+                await FirebaseFirestore.instance
+                    .collection("complaints")
+                    .doc(doc.id)
+                    .delete();
+                String type = doc.get('type');
+                var complaintCountDocumentRef = await FirebaseFirestore.instance
+                    .collection('complaintsCount')
+                    .doc('7av1p8pWqBb7iPWZk0Hd');
+                var complaintCountDocument =
+                    await transaction.get(complaintCountDocumentRef);
+                await transaction.update(complaintCountDocumentRef,
+                    {type: complaintCountDocument[type] - 1});
+              });
             } else if (direction == DismissDirection.startToEnd) {
               FirebaseFirestore.instance
-                  .collection("complaints")
-                  .doc(doc.id)
+                  .collection("complaintsCount")
+                  .doc("doc.id")
                   .update({'verified': true});
             }
           },
@@ -41,38 +54,45 @@ class _ComplaintState extends State<ComplaintA> {
               leading: Icon(Icons.food_bank_rounded,
                   color: doc['status'] ? Colors.green[600] : Colors.red[600]),
               title: TextButton(
-                  child: Text(
-                    doc['complaint'],
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  onPressed: () {
-                    String fullComplaint = doc['complaint'];
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Container(
-                          child: AlertDialog(
-                            icon: Icon(
-                              Icons.report_problem,
+                child: Text(
+                  doc['complaint'],
+                  overflow: TextOverflow.ellipsis,
+                ),
+                onPressed: () {
+                  String fullComplaint = doc['complaint'];
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Center(
+                        child: AlertDialog(
+                          icon: Icon(
+                            Icons.report_problem,
+                          ),
+                          elevation: 10,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(32.0),
                             ),
-                            elevation: 10,
-//                                 titlePadding: 40,
-//                                 contentPadding: 20,
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(32.0))),
-                            title: Text("Complaint"),
-                            content: Text(
-                              fullComplaint,
-                              style: TextStyle(
-                                  color: Color.fromARGB(255, 1, 56, 112),
-//                                       fontSize: 1,
-
-                                  fontFamily: 'Nunito'),
-                              textAlign: TextAlign.center,
+                          ),
+                          title: Text("Complaint"),
+                          content: Container(
+                            height: 100.h,
+                            width: 500.w,
+                            child: Center(
+                              child: SingleChildScrollView(
+                                child: Text(
+                                  fullComplaint,
+                                  style: TextStyle(
+                                      color: Color.fromARGB(255, 1, 56, 112),
+                                      fontFamily: 'Nunito'),
+                                  textAlign: TextAlign.justify,
+                                ),
+                              ),
                             ),
-                            actions: [
-                              TextButton(
+                          ),
+                          actions: [
+                            Center(
+                              child: TextButton(
                                 style: TextButton.styleFrom(
                                   backgroundColor: Color(0xFF3F5C94),
                                   shape: RoundedRectangleBorder(
@@ -84,15 +104,19 @@ class _ComplaintState extends State<ComplaintA> {
                                 },
                                 child: Text(
                                   "Close",
-                                  style: TextStyle(color: Color(0xFFFFFFFF)),
+                                  style: TextStyle(
+                                    color: Color(0xFFFFFFFF),
+                                  ),
                                 ),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  }),
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
               trailing: IconButton(
                 icon: Icon(
                   Icons.verified,
@@ -104,7 +128,11 @@ class _ComplaintState extends State<ComplaintA> {
                   FirebaseFirestore.instance
                       .collection("complaints")
                       .doc(id)
-                      .update({'verified': !doc['verified']});
+                      .update(
+                    {
+                      'verified': !doc['verified'],
+                    },
+                  );
                 },
               ),
             ),
@@ -156,8 +184,10 @@ class _ComplaintState extends State<ComplaintA> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      snapshot.hasData
-                          ? Expanded(child: showList(snapshot))
+                      ((snapshot.hasData) && ((snapshot.data!.docs.length > 0)))
+                          ? Expanded(
+                              child: showList(snapshot),
+                            )
                           : Column(
                               children: [
                                 SizedBox(
