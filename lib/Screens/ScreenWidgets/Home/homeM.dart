@@ -105,15 +105,30 @@ class _HomeMState extends State<HomeM> {
                                         child: ListView.builder(
                                           itemCount: Breakfast.length,
                                           itemBuilder: (context, index) {
-                                            return Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            return Column(
                                               children: [
-                                                Text(Breakfast[index].name),
-                                                Text(Breakfast[index]
-                                                    .qty
-                                                    .toString()),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                        width: 100.w,
+                                                        child: Text(
+                                                            Breakfast[index]
+                                                                .name)),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                      child: Text(
+                                                          Breakfast[index]
+                                                              .qty
+                                                              .toString()),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  color: Colors.black,
+                                                )
                                               ],
                                             );
                                           },
@@ -197,15 +212,30 @@ class _HomeMState extends State<HomeM> {
                                         child: ListView.builder(
                                           itemCount: Breakfast.length,
                                           itemBuilder: (context, index) {
-                                            return Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            return Column(
                                               children: [
-                                                Text(Breakfast[index].name),
-                                                Text(Breakfast[index]
-                                                    .qty
-                                                    .toString()),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                        width: 100.w,
+                                                        child: Text(
+                                                            Breakfast[index]
+                                                                .name)),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                      child: Text(
+                                                          Breakfast[index]
+                                                              .qty
+                                                              .toString()),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  color: Colors.black,
+                                                )
                                               ],
                                             );
                                           },
@@ -288,15 +318,30 @@ class _HomeMState extends State<HomeM> {
                                         child: ListView.builder(
                                           itemCount: Breakfast.length,
                                           itemBuilder: (context, index) {
-                                            return Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            return Column(
                                               children: [
-                                                Text(Breakfast[index].name),
-                                                Text(Breakfast[index]
-                                                    .qty
-                                                    .toString()),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                        width: 100.w,
+                                                        child: Text(
+                                                            Breakfast[index]
+                                                                .name)),
+                                                    SizedBox(
+                                                      width: 30.w,
+                                                      child: Text(
+                                                          Breakfast[index]
+                                                              .qty
+                                                              .toString()),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  color: Colors.black,
+                                                )
                                               ],
                                             );
                                           },
@@ -379,15 +424,30 @@ class _HomeMState extends State<HomeM> {
                                         child: ListView.builder(
                                           itemCount: Breakfast.length,
                                           itemBuilder: (context, index) {
-                                            return Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            return Column(
                                               children: [
-                                                Text(Breakfast[index].name),
-                                                Text(Breakfast[index]
-                                                    .qty
-                                                    .toString()),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    SizedBox(
+                                                        width: 100.w,
+                                                        child: Text(
+                                                            Breakfast[index]
+                                                                .name)),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                      child: Text(
+                                                          Breakfast[index]
+                                                              .qty
+                                                              .toString()),
+                                                    ),
+                                                  ],
+                                                ),
+                                                Divider(
+                                                  color: Colors.black,
+                                                )
                                               ],
                                             );
                                           },
@@ -485,20 +545,25 @@ class _HomeMState extends State<HomeM> {
                                                     SizedBox(
                                                         width: 100.w,
                                                         child: Text(
-                                                            Breakfast[index].name)),
+                                                            Breakfast[index]
+                                                                .name)),
                                                     SizedBox(
                                                         width: 100.w,
                                                         child: Text(
-                                                            Breakfast[index].meal)),
+                                                            Breakfast[index]
+                                                                .meal)),
                                                     SizedBox(
                                                       width: 10.w,
-                                                      child: Text(Breakfast[index]
-                                                          .qty
-                                                          .toString()),
+                                                      child: Text(
+                                                          Breakfast[index]
+                                                              .qty
+                                                              .toString()),
                                                     ),
                                                   ],
                                                 ),
-                                                Divider(color: Colors.black,)
+                                                Divider(
+                                                  color: Colors.black,
+                                                )
                                               ],
                                             );
                                           },
