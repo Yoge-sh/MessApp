@@ -7,6 +7,7 @@ This application automates and digitalizes various activities like:
 - Complaint Registering
 - Complaint Analysis
 - Personal Expenditure Tracking
+  
 
 # Structure of the Project
 1. Login with Institute Mail ID 🏫
